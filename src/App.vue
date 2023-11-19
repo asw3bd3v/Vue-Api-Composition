@@ -19,11 +19,54 @@
       </div>
     </a>
   </header>
-  <main></main>
+
+  <main class="flex flex-grow flex-col">
+    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Sunt vero
+    voluptate perferendis soluta! Sequi suscipit exercitationem, provident
+    quisquam asperiores, obcaecati aspernatur dolorum ratione est totam et,
+    minima animi. Doloremque, maiores?
+  </main>
+
+  <nav class="sticky bottom-0 z-10 bg-white">
+    <ul class="flex items-center justify-around border-t">
+      <li class="flex-1">
+        <a
+          href="#timeline"
+          class="flex flex-col items-center p-2 text-sm capitalize"
+        >
+          <ClockIcon class="h-6 w-6" />
+          timeline
+        </a>
+      </li>
+      <li class="flex-1">
+        <a
+          href="#activities"
+          class="flex flex-col items-center p-2 text-sm capitalize"
+        >
+          <ListBulletIcon class="h-6 w-6" />
+          activities
+        </a>
+      </li>
+      <li class="flex-1">
+        <a
+          href="#progress"
+          class="flex flex-col items-center p-2 text-sm capitalize"
+        >
+          <ChartBarIcon class="h-6 w-6" />
+          progress
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <script setup>
 import { CheckCircleIcon } from "@heroicons/vue/24/solid";
+import {
+  ClockIcon,
+  ListBulletIcon,
+  ChartBarIcon,
+} from "@heroicons/vue/24/outline";
 </script>
 
 <style scoped></style>
