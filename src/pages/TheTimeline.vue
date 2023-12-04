@@ -11,8 +11,7 @@
 </template>
 
 <script setup>
-import { generateTimelineItems } from "../functions";
 import TimelineItem from "../components/TimelineItem.vue";
 
-const timelineItems = generateTimelineItems();
+defineProps(["timelineItems"]);
 </script>
