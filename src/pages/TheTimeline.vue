@@ -12,11 +12,18 @@
 
 <script setup>
 import TimelineItem from "../components/TimelineItem.vue";
+import { HOURS_IN_DAY } from "../constants";
 
 defineProps({
   timelineItems: {
     type: Array,
     required: true,
+    validator(timelineItems) {
+      return timelineItems.every(
+        ({ hour }) =>
+          typeof hour === "number" && hour >= 0 && hour < HOURS_IN_DAY
+      );
+    },
   },
 });
 </script>
