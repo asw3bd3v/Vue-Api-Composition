@@ -26,5 +26,8 @@ defineProps({
     validator: isPageValid,
   },
 });
-const emit = defineEmits(["navigate"]);
+
+const emit = defineEmits({
+  navigate: isPageValid, // будем валидировать передаваемое значение
+});
 </script>
