@@ -1,24 +1,30 @@
 <template>
-  <div class="mt-7">
-    <ul>
-      <TimelineItem
-        v-for="timelineItem in timelineItems"
-        :key="timelineItem.hour"
-        :timeline-item="timelineItem"
-      />
-    </ul>
-  </div>
+	<div class="mt-7">
+		<ul>
+			<TimelineItem
+				v-for="timelineItem in timelineItems"
+				:key="timelineItem.hour"
+				:timeline-item="timelineItem"
+				:activity-select-options="activitySelectOptions"
+			/>
+		</ul>
+	</div>
 </template>
 
 <script setup>
 import TimelineItem from "../components/TimelineItem.vue";
-import { validateTimelineItems } from "../validators";
+import { validateTimelineItems, validateSelectOptions } from "../validators";
 
 defineProps({
-  timelineItems: {
-    type: Array,
-    required: true,
-    validator: validateTimelineItems,
-  },
+	timelineItems: {
+		type: Array,
+		required: true,
+		validator: validateTimelineItems,
+	},
+	activitySelectOptions: {
+		type: Array,
+		required: true,
+		validator: validateSelectOptions,
+	},
 });
 </script>
