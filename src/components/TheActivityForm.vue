@@ -16,7 +16,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import BaseButton from "./BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { isActivityValid } from "../validators";
@@ -27,8 +27,16 @@ const emit = defineEmits({
 
 const activity = ref("");
 
-function submit() {
-    emit("submit", activity.value);
+async function submit() {
+	emit("submit", activity.value);
+
 	activity.value = "";
+
+	/* nextTick(() => {
+		window.scrollTo(0, document.body.scrollHeight);
+	}); */
+
+	await nextTick();
+	window.scrollTo(0, document.body.scrollHeight);
 }
 </script>
