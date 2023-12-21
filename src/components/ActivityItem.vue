@@ -32,7 +32,7 @@ const emit = defineEmits({
 
 defineProps({
 	activity: {
-		type: String,
+		type: Object,
 		required: true,
 		validator: isActivityValid,
 	},
