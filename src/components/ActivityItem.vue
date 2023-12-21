@@ -4,7 +4,7 @@
 			<BaseButton :type="BUTTON_TYPE_DANGER" @click="emit('delete')">
 				<TrashIcon class="h-8" />
 			</BaseButton>
-			<span class="truncate text-xl">{{ activity }}</span>
+			<span class="truncate text-xl">{{ activity.name }}</span>
 		</div>
 		<div>
 			<BaseSelect
