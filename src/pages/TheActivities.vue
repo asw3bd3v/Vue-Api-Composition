@@ -9,36 +9,19 @@
 			/>
 		</ul>
 
-		<form
-			@submit.prevent="emit('createActivity', newActivity)"
-			class="sticky bottom-[57px] flex gap-2 border-t bg-white p-4"
-		>
-			<input
-				type="text"
-				:value="newActivity"
-				class="w-full rounded border px-4 text-xl"
-				placeholder="Activity name"
-				@input="newActivity = $event.target.value"
-			/>
-			<BaseButton>
-				<PlusIcon class="h-8" />
-			</BaseButton>
-		</form>
+		<TheActivityForm @submit="emit('createActivity', $event)" />
 	</div>
 </template>
 
 <script setup>
 import ActivityItem from "../components/ActivityItem.vue";
-import BaseButton from "../components/BaseButton.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
+import TheActivityForm from "../components/TheActivityForm.vue";
 import { validateActivities, isActivityValid } from "../validators";
 
 const emit = defineEmits({
 	createActivity: isActivityValid,
 	deleteActivity: isActivityValid,
 });
-
-let newActivity = "";
 
 defineProps({
 	activities: {
