@@ -5,11 +5,11 @@
 	>
 		<input
 			type="text"
-			v-model="activity"
+			v-model="name"
 			class="w-full rounded border px-4 text-xl"
 			placeholder="Activity name"
 		/>
-		<BaseButton :disabled="activity.trim() === ''">
+		<BaseButton :disabled="name.trim() === ''">
 			<PlusIcon class="h-8" />
 		</BaseButton>
 	</form>
@@ -20,17 +20,22 @@ import { nextTick, ref } from "vue";
 import BaseButton from "./BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { isActivityValid } from "../validators";
+import { id } from "../functions";
 
 const emit = defineEmits({
 	submit: isActivityValid,
 });
 
-const activity = ref("");
+const name = ref("");
 
 async function submit() {
-	emit("submit", activity.value);
+	emit("submit", {
+		id: id(),
+		name: name.value,
+		secondsToComplete: 0,
+	});
 
-	activity.value = "";
+	name.value = "";
 
 	/* nextTick(() => {
 		window.scrollTo(0, document.body.scrollHeight);
