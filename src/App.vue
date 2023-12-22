@@ -20,7 +20,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 
 import TheHeader from "./components/TheHeader.vue";
 import TheNav from "./components/TheNav.vue";
@@ -41,7 +41,9 @@ const timelineItems = generateTimelineItems();
 
 const activities = ref(generateActivities());
 
-const activitySelectOptions = generateActivitySelectOptions(activities.value);
+const activitySelectOptions = computed(() =>
+	generateActivitySelectOptions(activities.value),
+);
 
 function goTo(page) {
 	currentPage.value = page;

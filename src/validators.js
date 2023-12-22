@@ -44,6 +44,10 @@ export function isUndefinedOrNull(value) {
   return isUndefined(value) || isNull(value);
 }
 
+export function isSelectValueValid(value) {
+  return isNotEmptyString(value) || isNumberOrNull(value);
+}
+
 export function isNumberOrNull(value) {
   return isNumber(value) || isNull(value);
 }
@@ -52,12 +56,12 @@ export function isUndefined(value) {
   return value === undefined;
 }
 
-function isSelectOptionValid({ value, label }) {
-  return (isNumber(value) || isNotEmptyString(value)) && isNotEmptyString(label);
+export function isNull(value) {
+  return value === null;
 }
 
-function isNull(value) {
-  return value === null;
+function isSelectOptionValid({ value, label }) {
+  return (isNumber(value) || isNotEmptyString(value)) && isNotEmptyString(label);
 }
 
 function isNumber(value) {

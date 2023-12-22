@@ -38,5 +38,5 @@ defineProps({
 	},
 });
 
-const secondsToComplete = ref(null);
+const secondsToComplete = ref(0);
 </script>

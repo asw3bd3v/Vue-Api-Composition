@@ -4,7 +4,7 @@ import {
   MIDNIGHT_HOUR,
   SECONDS_IN_HOUR,
 } from "./constants";
-import { isPageValid } from "./validators";
+import { isPageValid, isNull } from "./validators";
 
 export function normalizePageHash() {
   const page = window.location.hash.slice(1);
@@ -20,6 +20,10 @@ export function normalizePageHash() {
 
 export function id() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
+}
+
+export function normalizeSelectValue(value) {
+  return isNull(value) || isNaN(value) ? value : +value;
 }
 
 export function generateActivities() {
