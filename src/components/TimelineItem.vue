@@ -7,7 +7,7 @@
 			:selected="timelineItem.activityId"
 			:options="activitySelectOptions"
 			placeholder="Rest"
-			@select="selectedActivity"
+			@select="selectActivity"
 		/>
 	</li>
 </template>
@@ -18,12 +18,15 @@ import {
 	isTimelineItemValid,
 	validateSelectOptions,
 	validateActivities,
+	isNull,
 } from "../validators";
 import BaseSelect from "./BaseSelect.vue";
 import TimelineHour from "./TimelineHour.vue";
 
 const emit = defineEmits({
-	selectedActivity: isActivityValid,
+	selectActivity(activity) {
+		return isNull(activity) || isActivityValid(activity);
+	},
 });
 
 const props = defineProps({
@@ -44,10 +47,10 @@ const props = defineProps({
 	},
 });
 
-function selectedActivity(id) {
+function selectActivity(id) {
 	emit(
 		"selectActivity",
-		props.activities.find((activity) => activity.id === id),
+		props.activities.find((activity) => activity.id === id) || null,
 	);
 }
 </script>

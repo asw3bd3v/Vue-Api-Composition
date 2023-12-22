@@ -26,13 +26,14 @@ import {
 	validateActivities,
 	isTimelineItemValid,
 	isActivityValid,
+	isNull,
 } from "../validators";
 
 const emit = defineEmits({
 	setTimelineItemActivity({ timelineItem, activity }) {
 		return [
 			isTimelineItemValid(timelineItem),
-			isActivityValid(activity),
+			isNull(activity) || isActivityValid(activity),
 		].every(Boolean);
 	},
 });
