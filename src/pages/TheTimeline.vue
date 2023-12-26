@@ -8,10 +8,7 @@
 				:activities="activities"
 				:activity-select-options="activitySelectOptions"
 				@select-activity="
-					emit('setTimelineItemActivity', {
-						timelineItem,
-						activity: $event,
-					})
+					emit('setTimelineItemActivity', timelineItem, $event)
 				"
 			/>
 		</ul>
@@ -26,14 +23,13 @@ import {
 	validateActivities,
 	isTimelineItemValid,
 	isActivityValid,
-	isNull,
 } from "../validators";
 
 const emit = defineEmits({
-	setTimelineItemActivity({ timelineItem, activity }) {
+	setTimelineItemActivity(timelineItem, activity) {
 		return [
 			isTimelineItemValid(timelineItem),
-			isNull(activity) || isActivityValid(activity),
+			isActivityValid(activity),
 		].every(Boolean);
 	},
 });

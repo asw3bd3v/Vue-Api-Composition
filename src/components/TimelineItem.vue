@@ -18,15 +18,13 @@ import {
 	isTimelineItemValid,
 	validateSelectOptions,
 	validateActivities,
-	isNull,
 } from "../validators";
 import BaseSelect from "./BaseSelect.vue";
 import TimelineHour from "./TimelineHour.vue";
+import { NULLABLE_ACTIVITY } from "../constants.js";
 
 const emit = defineEmits({
-	selectActivity(activity) {
-		return isNull(activity) || isActivityValid(activity);
-	},
+	selectActivity: isActivityValid,
 });
 
 const props = defineProps({
@@ -48,9 +46,13 @@ const props = defineProps({
 });
 
 function selectActivity(id) {
-	emit(
-		"selectActivity",
-		props.activities.find((activity) => activity.id === id) || null,
+	emit("selectActivity", findActivityById(id));
+}
+
+function findActivityById(id) {
+	return (
+		props.activities.find((activity) => activity.id === id) ||
+		NULLABLE_ACTIVITY
 	);
 }
 </script>
