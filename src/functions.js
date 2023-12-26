@@ -5,6 +5,7 @@ import {
   SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
+  MILLISECONDS_IN_SECOND,
 } from "./constants";
 import { isPageValid, isNull } from "./validators";
 
@@ -43,6 +44,7 @@ export function generateTimelineItems() {
     timelineItems.push({
       hour,
       activityId: null,
+      activitySeconds: 0,
     });
   }
 
@@ -58,6 +60,16 @@ export function generatePeriodSelectOptions(periodsInMinutes) {
     value: periodInMinute * SECONDS_IN_MINUTE,
     label: generatePeriodSelectOptionsLabel(periodInMinute),
   }));
+}
+
+export function formatSeconds(seconds) {
+  const date = new Date();
+
+  date.setTime(Math.abs(seconds) * MILLISECONDS_IN_SECOND);
+
+  const utc = date.toUTCString();
+
+  return utc.substring(utc.indexOf(":") - 2, utc.indexOf(":") + 6);
 }
 
 function generatePeriodSelectOptionsLabel(periodInMinute) {

@@ -9,22 +9,7 @@
 			placeholder="Rest"
 			@select="selectActivity"
 		/>
-		<div class="flex w-full gap-2">
-			<BaseButton :type="BUTTON_TYPE_DANGER">
-				<ArrowPathIcon class="h-8" />
-			</BaseButton>
-			<div
-				class="flex flex-grow items-center rounded bg-gray-100 font-mono text-3xl"
-			>
-				00:00:00
-			</div>
-			<BaseButton :type="BUTTON_TYPE_WARNING">
-				<PauseIcon class="h-8" />
-			</BaseButton>
-			<BaseButton :type="BUTTON_TYPE_SUCCESS">
-				<PlayIcon class="h-8" />
-			</BaseButton>
-		</div>
+		<TimelineStopwatch :seconds="timelineItem.activitySeconds" />
 	</li>
 </template>
 
@@ -37,14 +22,10 @@ import {
 } from "../validators";
 import BaseSelect from "./BaseSelect.vue";
 import TimelineHour from "./TimelineHour.vue";
+import TimelineStopwatch from "./TimelineStopwatch.vue";
 import {
 	NULLABLE_ACTIVITY,
-	BUTTON_TYPE_DANGER,
-	BUTTON_TYPE_WARNING,
-	BUTTON_TYPE_SUCCESS,
 } from "../constants.js";
-import BaseButton from "./BaseButton.vue";
-import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
 
 const emit = defineEmits({
 	selectActivity: isActivityValid,
