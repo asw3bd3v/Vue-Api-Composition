@@ -60,12 +60,12 @@ export function isNull(value) {
   return value === null;
 }
 
-function isSelectOptionValid({ value, label }) {
-  return (isNumber(value) || isNotEmptyString(value)) && isNotEmptyString(label);
+export function isNumber(value) {
+  return typeof value === "number";
 }
 
-function isNumber(value) {
-  return typeof value === "number";
+function isSelectOptionValid({ value, label }) {
+  return (isNumber(value) || isNotEmptyString(value)) && isNotEmptyString(label);
 }
 
 function isString(value) {
