@@ -9,7 +9,10 @@
 			placeholder="Rest"
 			@select="selectActivity"
 		/>
-		<TimelineStopwatch :seconds="timelineItem.activitySeconds" />
+		<TimelineStopwatch
+			:seconds="timelineItem.activitySeconds"
+			:hour="timelineItem.hour"
+		/>
 	</li>
 </template>
 
@@ -23,9 +26,7 @@ import {
 import BaseSelect from "./BaseSelect.vue";
 import TimelineHour from "./TimelineHour.vue";
 import TimelineStopwatch from "./TimelineStopwatch.vue";
-import {
-	NULLABLE_ACTIVITY,
-} from "../constants.js";
+import { NULLABLE_ACTIVITY } from "../constants.js";
 
 const emit = defineEmits({
 	selectActivity: isActivityValid,
