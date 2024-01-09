@@ -39,6 +39,8 @@ const emit = defineEmits({
 	},
 });
 
+defineExpose({ scrollToHour });
+
 const props = defineProps({
 	timelineItems: {
 		type: Array,
@@ -68,17 +70,18 @@ watchPostEffect(async () => {
 	if (props.currentPage === PAGE_TIMELINE) {
 		await nextTick();
 
-		scrollToHour(new Date().getHours());
+		scrollToHour(null, false);
 	}
 });
 
-function scrollToHour(hour) {
+function scrollToHour(hour = null, isSmooth = true) {
+	hour ??= new Date().getHours();
+
+	const options = { behavior: isSmooth ? "smooth" : "instant" };
 	if (hour === MIDNIGHT_HOUR) {
-		document.body.scrollIntoView({ behavior: "smooth" });
+		document.body.scrollIntoView(options);
 	} else {
-		timelineItemRefs.value[hour - 1].$el.scrollIntoView({
-			behavior: "smooth",
-		});
+		timelineItemRefs.value[hour - 1].$el.scrollIntoView(options);
 	}
 }
 </script>
