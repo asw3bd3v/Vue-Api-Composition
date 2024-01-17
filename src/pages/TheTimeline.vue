@@ -12,6 +12,13 @@
 				@select-activity="
 					emit('setTimelineItemActivity', timelineItem, $event)
 				"
+				@update-activity-seconds="
+					emit(
+						'updateTimelineItemActivitySeconds',
+						timelineItem,
+						$event,
+					)
+				"
 			/>
 		</ul>
 	</div>
@@ -27,6 +34,7 @@ import {
 	isTimelineItemValid,
 	isActivityValid,
 	isPageValid,
+	isNumber,
 } from "../validators";
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "../constants";
 
@@ -35,6 +43,12 @@ const emit = defineEmits({
 		return [
 			isTimelineItemValid(timelineItem),
 			isActivityValid(activity),
+		].every(Boolean);
+	},
+	updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
+		return [
+			isTimelineItemValid(timelineItem),
+			isNumber(activitySeconds),
 		].every(Boolean);
 	},
 });
