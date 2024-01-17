@@ -5,9 +5,9 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, inject } from "vue";
 import { formatSeconds, getTotalActivitySeconds } from "../functions";
-import { isActivityValid, validateTimelineItems } from "../validators";
+import { isActivityValid } from "../validators";
 
 const props = defineProps({
 	activity: {
@@ -15,12 +15,9 @@ const props = defineProps({
 		required: true,
 		validator: isActivityValid,
 	},
-	timelineItems: {
-		type: Array,
-		required: true,
-		validator: validateTimelineItems,
-	},
 });
+
+const timelineItems = inject('timelineItems');
 
 const classes = computed(
 	() =>
@@ -41,7 +38,7 @@ const sign = computed(() => (secondsDiff.value >= 0 ? "+" : "-"));
 
 const secondsDiff = computed(
 	() =>
-		getTotalActivitySeconds(props.activity, props.timelineItems) -
+		getTotalActivitySeconds(props.activity, timelineItems) -
 		props.activity.secondsToComplete,
 );
 </script>

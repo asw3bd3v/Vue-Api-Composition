@@ -17,7 +17,6 @@
 			<ActivitySecondsToComplete
 				v-if="activity.secondsToComplete"
 				:activity="activity"
-				:timeline-items="timelineItems"
 			/>
 		</div>
 	</li>
@@ -29,7 +28,7 @@ import BaseSelect from "./BaseSelect.vue";
 import BaseButton from "./BaseButton.vue";
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue";
 import { PERIOD_SELECT_OPTIONS, BUTTON_TYPE_DANGER } from "../constants";
-import { isActivityValid, isNumber, isUndefined, validateTimelineItems } from "../validators";
+import { isActivityValid, isNumber, isUndefined } from "../validators";
 
 const emit = defineEmits({
 	delete: isUndefined,
@@ -41,11 +40,6 @@ defineProps({
 		type: Object,
 		required: true,
 		validator: isActivityValid,
-	},
-	timelineItems: {
-		type: Array,
-		required: true,
-		validator: validateTimelineItems,
 	},
 });
 </script>
