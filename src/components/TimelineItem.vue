@@ -12,11 +12,7 @@
 			placeholder="Rest"
 			@select="selectActivity"
 		/>
-		<TimelineStopwatch
-			:seconds="timelineItem.activitySeconds"
-			:hour="timelineItem.hour"
-			@update-seconds="emit('updateActivitySeconds', $event)"
-		/>
+		<TimelineStopwatch :timeline-item="timelineItem" />
 	</li>
 </template>
 
@@ -37,7 +33,6 @@ import { NULLABLE_ACTIVITY } from "../constants.js";
 const emit = defineEmits({
 	selectActivity: isActivityValid,
 	scrollToHour: isHourValid,
-	updateActivitySeconds: isNumber,
 });
 
 const props = defineProps({
