@@ -17,13 +17,12 @@
 </template>
 
 <script setup>
+import { inject } from "vue";
 import {
 	isActivityValid,
 	isTimelineItemValid,
 	validateSelectOptions,
-	validateActivities,
 	isHourValid,
-	isNumber,
 } from "../validators";
 import BaseSelect from "./BaseSelect.vue";
 import TimelineHour from "./TimelineHour.vue";
@@ -35,21 +34,14 @@ const emit = defineEmits({
 	scrollToHour: isHourValid,
 });
 
-const props = defineProps({
+const activities = inject("activities");
+const activitySelectOptions = inject("activitySelectOptions");
+
+defineProps({
 	timelineItem: {
 		type: Object,
 		required: true,
 		validator: isTimelineItemValid,
-	},
-	activities: {
-		type: Array,
-		required: true,
-		validator: validateActivities,
-	},
-	activitySelectOptions: {
-		type: Array,
-		required: true,
-		validator: validateSelectOptions,
 	},
 });
 
@@ -59,8 +51,7 @@ function selectActivity(id) {
 
 function findActivityById(id) {
 	return (
-		props.activities.find((activity) => activity.id === id) ||
-		NULLABLE_ACTIVITY
+		activities.find((activity) => activity.id === id) || NULLABLE_ACTIVITY
 	);
 }
 </script>
