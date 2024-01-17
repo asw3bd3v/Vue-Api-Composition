@@ -33,6 +33,7 @@ import {
 	generateTimelineItems,
 	generateActivitySelectOptions,
 	generateActivities,
+	generatePeriodSelectOptions,
 } from "./functions";
 import TheActivities from "./pages/TheActivities.vue";
 import TheProgress from "./pages/TheProgress.vue";
@@ -92,7 +93,7 @@ provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
 provide("timelineItems", timelineItems.value);
 provide("activities", activities.value);
 provide("activitySelectOptions", activitySelectOptions.value);
-
+provide("periodSelectOptions", generatePeriodSelectOptions());
 </script>
 
 <style scoped></style>

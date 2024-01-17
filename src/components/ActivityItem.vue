@@ -11,7 +11,7 @@
 				class="font-mono grow"
 				placeholder="hh:mm"
 				:selected="activity.secondsToComplete || null"
-				:options="PERIOD_SELECT_OPTIONS"
+				:options="periodSelectOptions"
 				@select="emit('setSecondsToComplete', $event || 0)"
 			/>
 			<ActivitySecondsToComplete
@@ -23,17 +23,20 @@
 </template>
 
 <script setup>
+import { inject } from "vue";
 import { TrashIcon } from "@heroicons/vue/24/outline";
 import BaseSelect from "./BaseSelect.vue";
 import BaseButton from "./BaseButton.vue";
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue";
-import { PERIOD_SELECT_OPTIONS, BUTTON_TYPE_DANGER } from "../constants";
+import { BUTTON_TYPE_DANGER } from "../constants";
 import { isActivityValid, isNumber, isUndefined } from "../validators";
 
 const emit = defineEmits({
 	delete: isUndefined,
 	setSecondsToComplete: isNumber,
 });
+
+const periodSelectOptions = inject("periodSelectOptions");
 
 defineProps({
 	activity: {
