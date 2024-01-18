@@ -9,7 +9,7 @@
 			/>
 		</ul>
 		<TheActivitiesEmptyState v-else />
-		<TheActivityForm @submit="emit('createActivity', $event)" />
+		<TheActivityForm />
 	</div>
 </template>
 
@@ -20,7 +20,6 @@ import TheActivitiesEmptyState from "../components/TheActivitiesEmptyState.vue";
 import { validateActivities, isActivityValid } from "../validators";
 
 const emit = defineEmits({
-	createActivity: isActivityValid,
 	deleteActivity: isActivityValid,
 });
 
