@@ -13,7 +13,6 @@
 			:activities="activities"
 			@create-activity="createActivity"
 			@delete-activity="deleteActivity"
-			@set-activity-seconds-to-complete="setActivitySecondsToComplete"
 		/>
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -90,6 +89,7 @@ function setActivitySecondsToComplete(activity, secondsToComplete) {
 
 provide("updateTimelineItemActivitySeconds", updateTimelineItemActivitySeconds);
 provide("setTimelineItemActivity", setTimelineItemActivity);
+provide("setActivitySecondsToComplete", setActivitySecondsToComplete);
 provide("timelineItems", timelineItems.value);
 provide("activitySelectOptions", activitySelectOptions.value);
 provide("periodSelectOptions", generatePeriodSelectOptions());
