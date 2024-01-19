@@ -33,10 +33,15 @@ import BaseButton from "./BaseButton.vue";
 import ActivitySecondsToComplete from "./ActivitySecondsToComplete.vue";
 import { BUTTON_TYPE_DANGER } from "../constants";
 import { isActivityValid } from "../validators";
+import {
+	setActivitySecondsToCompleteKey,
+	deleteActivityKey,
+	periodSelectOptionsKey,
+} from "../keys.js";
 
-const periodSelectOptions = inject("periodSelectOptions");
-const setActivitySecondsToComplete = inject("setActivitySecondsToComplete");
-const deleteActivity = inject("deleteActivity");
+const periodSelectOptions = inject(periodSelectOptionsKey);
+const setActivitySecondsToComplete = inject(setActivitySecondsToCompleteKey);
+const deleteActivity = inject(deleteActivityKey);
 
 defineProps({
 	activity: {

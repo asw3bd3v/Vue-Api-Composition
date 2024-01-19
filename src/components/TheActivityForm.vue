@@ -20,8 +20,9 @@ import { nextTick, ref, inject } from "vue";
 import BaseButton from "./BaseButton.vue";
 import { PlusIcon } from "@heroicons/vue/24/outline";
 import { id } from "../functions";
+import { createActivityKey } from "../keys.js";
 
-const createActivity = inject("createActivity");
+const createActivity = inject(createActivityKey);
 
 const name = ref("");
 

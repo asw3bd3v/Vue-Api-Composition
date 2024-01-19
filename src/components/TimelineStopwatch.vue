@@ -38,6 +38,7 @@ import { formatSeconds } from "../functions";
 import { isTimelineItemValid } from "../validators";
 import BaseButton from "./BaseButton.vue";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
+import { updateTimelineItemActivitySecondsKey } from "../keys.js";
 
 const props = defineProps({
 	timelineItem: {
@@ -48,7 +49,7 @@ const props = defineProps({
 });
 
 const updateTimelineItemActivitySeconds = inject(
-	"updateTimelineItemActivitySeconds",
+	updateTimelineItemActivitySecondsKey,
 );
 
 const seconds = ref(props.timelineItem.activitySeconds);
