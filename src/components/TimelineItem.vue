@@ -4,7 +4,7 @@
 	>
 		<TimelineHour
 			:hour="timelineItem.hour"
-			@click.prevent="emit('scrollToHour', timelineItem.hour)"
+			@click.prevent="emit('scrollToHour')"
 		/>
 		<BaseSelect
 			:selected="timelineItem.activityId"
@@ -18,7 +18,7 @@
 
 <script setup>
 import { inject } from "vue";
-import { isTimelineItemValid, isHourValid } from "../validators";
+import { isTimelineItemValid, isUndefined } from "../validators";
 import BaseSelect from "./BaseSelect.vue";
 import TimelineHour from "./TimelineHour.vue";
 import TimelineStopwatch from "./TimelineStopwatch.vue";
@@ -28,7 +28,7 @@ import {
 } from "../keys.js";
 
 const emit = defineEmits({
-	scrollToHour: isHourValid,
+	scrollToHour: isUndefined,
 });
 
 const setTimelineItemActivity = inject(setTimelineItemActivityKey);

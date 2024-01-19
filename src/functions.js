@@ -7,6 +7,10 @@ import {
 } from "./constants";
 import { isNull } from "./validators";
 
+export function currentHour() {
+  return new Date().getHours();
+}
+
 export function id() {
   return Date.now().toString(36) + Math.random().toString(36).substring(2);
 }
