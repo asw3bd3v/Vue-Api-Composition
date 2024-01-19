@@ -1,7 +1,7 @@
 <template>
 	<li class="flex-1">
-		<a :href="`#${page}`" :class="classes" @click="navigate(page)">
-			<slot></slot>
+		<a :href="`#${navItem.page}`" :class="classes" @click="navigate(navItem.page)">
+      <component :is="navItem.icon" class="h-6 w-6" /> {{ navItem.page }}
 		</a>
 	</li>
 </template>
@@ -9,20 +9,20 @@
 <script setup>
 import { computed } from "vue";
 import { navigate, currentPage } from "../router.js";
-import { isPageValid } from "../validators.js";
+import { isNavItemValid } from "../validators.js";
 
 const props = defineProps({
-	page: {
-		type: String,
+	navItem: {
+		type: Object,
 		required: true,
-		validator: isPageValid,
+		validator: isNavItemValid,
 	},
 });
 
 const classes = computed(() => {
 	return [
 		"flex flex-col items-center p-2 text-sm capitalize",
-		{ "bg-gray-200 pointer-events-none": props.page === currentPage.value },
+		{ "bg-gray-200 pointer-events-none": props.navItem.page === currentPage.value },
 	];
 });
 </script>
