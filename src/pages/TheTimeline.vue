@@ -15,9 +15,7 @@
 <script setup>
 import { nextTick, ref, watchPostEffect } from "vue";
 import TimelineItem from "../components/TimelineItem.vue";
-import {
-	validateTimelineItems,
-} from "../validators";
+import { validateTimelineItems } from "../validators";
 import { MIDNIGHT_HOUR, PAGE_TIMELINE } from "../constants";
 import { currentPage } from "../router.js";
 
@@ -44,11 +42,11 @@ watchPostEffect(async () => {
 function scrollToHour(hour = null, isSmooth = true) {
 	hour ??= new Date().getHours();
 
-	const options = { behavior: isSmooth ? "smooth" : "instant" };
-	if (hour === MIDNIGHT_HOUR) {
-		document.body.scrollIntoView(options);
-	} else {
-		timelineItemRefs.value[hour - 1].$el.scrollIntoView(options);
-	}
+	const el =
+		hour === MIDNIGHT_HOUR
+			? document.body
+			: timelineItemRefs.value[hour - 1].$el;
+
+	el.scrollIntoView({ behavior: isSmooth ? "smooth" : "instant" });
 }
 </script>
