@@ -1,11 +1,10 @@
 <template>
-	<TheHeader @navigate="navigate" />
+	<TheHeader />
 
 	<main class="flex flex-grow flex-col">
 		<TheTimeline
 			v-show="currentPage === PAGE_TIMELINE"
 			:timeline-items="timelineItems"
-			:current-page="currentPage"
 			ref="timelineRef"
 		/>
 		<TheActivities
@@ -15,7 +14,7 @@
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
 
-	<TheNav :current-page="currentPage" @navigate="navigate" />
+	<TheNav />
 </template>
 
 <script setup>
@@ -30,7 +29,7 @@ import {
 	generateActivities,
 	generatePeriodSelectOptions,
 } from "./functions";
-import { currentPage, navigate, timelineRef } from "./router.js";
+import { currentPage, timelineRef } from "./router.js";
 import TheActivities from "./pages/TheActivities.vue";
 import TheProgress from "./pages/TheProgress.vue";
 import TheTimeline from "./pages/TheTimeline.vue";
