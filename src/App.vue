@@ -18,44 +18,29 @@
 </template>
 
 <script setup>
-import { ref, computed, provide, readonly } from "vue";
+import { ref, provide, readonly } from "vue";
 
 import TheHeader from "./components/TheHeader.vue";
 import TheNav from "./components/TheNav.vue";
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from "./constants";
 import {
 	generateTimelineItems,
-	generateActivitySelectOptions,
-	generateActivities,
 	generatePeriodSelectOptions,
 } from "./functions";
 import { currentPage, timelineRef } from "./router.js";
 import * as keys from "./keys.js";
+import {
+	setActivitySecondsToComplete,
+	activitySelectOptions,
+	createActivity,
+	deleteActivity,
+	activities,
+} from "./activities.js";
 import TheActivities from "./pages/TheActivities.vue";
 import TheProgress from "./pages/TheProgress.vue";
 import TheTimeline from "./pages/TheTimeline.vue";
 
-const activities = ref(generateActivities());
-
 const timelineItems = ref(generateTimelineItems(activities.value));
-
-const activitySelectOptions = computed(() =>
-	generateActivitySelectOptions(activities.value),
-);
-
-function createActivity(activity) {
-	activities.value.push(activity);
-}
-
-function deleteActivity(activity) {
-	timelineItems.value.forEach((timelineItem) => {
-		if (timelineItem.activityId === activity.id) {
-			timelineItem.activityId = null;
-			timelineItem.activitySeconds = 0;
-		}
-	});
-	activities.value.splice(activities.value.indexOf(activity), 1);
-}
 
 function setTimelineItemActivity(timelineItem, activityId) {
 	timelineItem.activityId = activityId;
@@ -63,10 +48,6 @@ function setTimelineItemActivity(timelineItem, activityId) {
 
 function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
 	timelineItem.activitySeconds += activitySeconds;
-}
-
-function setActivitySecondsToComplete(activity, secondsToComplete) {
-	activity.secondsToComplete = secondsToComplete || 0;
 }
 
 provide(
