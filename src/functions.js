@@ -1,5 +1,4 @@
 import {
-  SECONDS_IN_HOUR,
   SECONDS_IN_MINUTE,
   MINUTES_IN_HOUR,
   MILLISECONDS_IN_SECOND,
@@ -18,24 +17,12 @@ export function normalizeSelectValue(value) {
   return isNull(value) || isNaN(value) ? value : +value;
 }
 
-export function generateActivities() {
-  return ['Coding', 'Reading', 'Training'].map((name, hours) => ({
-    id: id(),
-    name,
-    secondsToComplete: hours * SECONDS_IN_HOUR
-  }));
-}
-
 export function getTotalActivitySeconds(activity, timelineItems) {
   return timelineItems
     .filter((timelineItem) => timelineItem.activityId === activity.id)
     .reduce((totalSeconds, timelineItem) =>
       Math.round(timelineItem.activitySeconds + totalSeconds)
       , 0)
-}
-
-export function generateActivitySelectOptions(activities) {
-  return activities.map((activity) => ({ label: activity.name, value: activity.id }));
 }
 
 export function generatePeriodSelectOptions() {
