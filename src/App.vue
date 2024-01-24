@@ -18,15 +18,12 @@
 </template>
 
 <script setup>
-import { ref, provide, readonly } from "vue";
+import { provide, readonly } from "vue";
 
 import TheHeader from "./components/TheHeader.vue";
 import TheNav from "./components/TheNav.vue";
 import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from "./constants";
-import {
-	generateTimelineItems,
-	generatePeriodSelectOptions,
-} from "./functions";
+import { generatePeriodSelectOptions } from "./functions";
 import { currentPage, timelineRef } from "./router.js";
 import * as keys from "./keys.js";
 import {
@@ -36,19 +33,14 @@ import {
 	deleteActivity,
 	activities,
 } from "./activities.js";
+import {
+	updateTimelineItemActivitySeconds,
+	setTimelineItemActivity,
+	timelineItems,
+} from "./timelineitems.js";
 import TheActivities from "./pages/TheActivities.vue";
 import TheProgress from "./pages/TheProgress.vue";
 import TheTimeline from "./pages/TheTimeline.vue";
-
-const timelineItems = ref(generateTimelineItems(activities.value));
-
-function setTimelineItemActivity(timelineItem, activityId) {
-	timelineItem.activityId = activityId;
-}
-
-function updateTimelineItemActivitySeconds(timelineItem, activitySeconds) {
-	timelineItem.activitySeconds += activitySeconds;
-}
 
 provide(
 	keys.updateTimelineItemActivitySecondsKey,

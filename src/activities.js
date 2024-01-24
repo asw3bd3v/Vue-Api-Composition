@@ -11,7 +11,6 @@ export const activitySelectOptions = computed(() =>
 	generateActivitySelectOptions(activities.value),
 );
 
-
 export function createActivity(activity) {
 	activities.value.push(activity);
 }
