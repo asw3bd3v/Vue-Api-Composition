@@ -4,12 +4,10 @@
 	<main class="flex flex-grow flex-col">
 		<TheTimeline
 			v-show="currentPage === PAGE_TIMELINE"
-			:timeline-items="timelineItems"
 			ref="timelineRef"
 		/>
 		<TheActivities
 			v-show="currentPage === PAGE_ACTIVITIES"
-			:activities="activities"
 		/>
 		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
 	</main>
@@ -31,13 +29,11 @@ import {
 	activitySelectOptions,
 	createActivity,
 	deleteActivity,
-	activities,
 } from "./activities.js";
 import {
 	updateTimelineItemActivitySeconds,
 	setTimelineItemActivity,
 	resetTimelineItemActivities,
-	timelineItems,
 } from "./timeline-items.js";
 import TheActivities from "./pages/TheActivities.vue";
 import TheProgress from "./pages/TheProgress.vue";
@@ -54,7 +50,6 @@ provide(keys.deleteActivityKey, (activity) => {
 	resetTimelineItemActivities(activity);
 	deleteActivity(activity);
 });
-provide(keys.timelineItemsKey, readonly(timelineItems));
 provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
 provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 </script>
