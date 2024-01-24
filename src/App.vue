@@ -36,8 +36,9 @@ import {
 import {
 	updateTimelineItemActivitySeconds,
 	setTimelineItemActivity,
+	resetTimelineItemActivities,
 	timelineItems,
-} from "./timelineitems.js";
+} from "./timeline-items.js";
 import TheActivities from "./pages/TheActivities.vue";
 import TheProgress from "./pages/TheProgress.vue";
 import TheTimeline from "./pages/TheTimeline.vue";
@@ -49,7 +50,10 @@ provide(
 provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
 provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
 provide(keys.createActivityKey, createActivity);
-provide(keys.deleteActivityKey, deleteActivity);
+provide(keys.deleteActivityKey, (activity) => {
+	resetTimelineItemActivities(activity);
+	deleteActivity(activity);
+});
 provide(keys.timelineItemsKey, readonly(timelineItems));
 provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
 provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
