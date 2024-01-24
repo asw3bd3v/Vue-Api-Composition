@@ -58,8 +58,8 @@ provide(keys.setTimelineItemActivityKey, setTimelineItemActivity);
 provide(keys.setActivitySecondsToCompleteKey, setActivitySecondsToComplete);
 provide(keys.createActivityKey, createActivity);
 provide(keys.deleteActivityKey, deleteActivity);
-provide(keys.timelineItemsKey, readonly(timelineItems.value));
-provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions.value));
+provide(keys.timelineItemsKey, readonly(timelineItems));
+provide(keys.activitySelectOptionsKey, readonly(activitySelectOptions));
 provide(keys.periodSelectOptionsKey, readonly(generatePeriodSelectOptions()));
 </script>
 
