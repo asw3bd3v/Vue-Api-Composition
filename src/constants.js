@@ -3,6 +3,7 @@ import {
 	ListBulletIcon,
 	ChartBarIcon,
 } from "@heroicons/vue/24/outline";
+import { generatePeriodSelectOptions } from "./functions";
 
 export const PAGE_TIMELINE = "timeline";
 export const PAGE_ACTIVITIES = "activities";
@@ -43,3 +44,5 @@ export const SECONDS_IN_MINUTE = 60;
 export const MINUTES_IN_HOUR = 60;
 export const SECONDS_IN_HOUR = SECONDS_IN_MINUTE * MINUTES_IN_HOUR;
 export const HOURS_IN_DAY = 24;
+
+export const PERIOD_SELECT_OPTIONS = generatePeriodSelectOptions();

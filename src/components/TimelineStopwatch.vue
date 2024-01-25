@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from "vue";
+import { ref } from "vue";
 import {
 	BUTTON_TYPE_DANGER,
 	BUTTON_TYPE_WARNING,
@@ -38,7 +38,7 @@ import { formatSeconds, currentHour } from "../functions";
 import { isTimelineItemValid } from "../validators";
 import BaseButton from "./BaseButton.vue";
 import { ArrowPathIcon, PauseIcon, PlayIcon } from "@heroicons/vue/24/outline";
-import { updateTimelineItemActivitySecondsKey } from "../keys.js";
+import { updateTimelineItemActivitySeconds } from "../timeline-items";
 
 const props = defineProps({
 	timelineItem: {
@@ -47,10 +47,6 @@ const props = defineProps({
 		validator: isTimelineItemValid,
 	},
 });
-
-const updateTimelineItemActivitySeconds = inject(
-	updateTimelineItemActivitySecondsKey,
-);
 
 const seconds = ref(props.timelineItem.activitySeconds);
 const isRunning = ref(false);
