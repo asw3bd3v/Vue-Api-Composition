@@ -1,7 +1,11 @@
 <template>
 	<li class="flex-1">
-		<a :href="`#${navItem.page}`" :class="classes" @click="navigate(navItem.page)">
-      <component :is="navItem.icon" class="h-6 w-6" /> {{ navItem.page }}
+		<a
+			:href="`#${navItem.page}`"
+			:class="classes"
+			@click="navigate(navItem.page)"
+		>
+			<component :is="navItem.icon" class="h-6 w-6" /> {{ navItem.page }}
 		</a>
 	</li>
 </template>
@@ -22,7 +26,10 @@ const props = defineProps({
 const classes = computed(() => {
 	return [
 		"flex flex-col items-center p-2 text-sm capitalize",
-		{ "bg-gray-200 pointer-events-none": props.navItem.page === currentPage.value },
+		{
+			"bg-gray-200 pointer-events-none":
+				props.navItem.page === currentPage.value,
+		},
 	];
 });
 </script>

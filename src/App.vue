@@ -2,9 +2,9 @@
 	<TheHeader />
 
 	<main class="flex flex-grow flex-col">
-		<TheTimeline v-show="currentPage === PAGE_TIMELINE" />
-		<TheActivities v-show="currentPage === PAGE_ACTIVITIES" />
-		<TheProgress v-show="currentPage === PAGE_PROGRESS" />
+		<KeepAlive>
+			<component :is="routes[currentPage]" />
+		</KeepAlive>
 	</main>
 
 	<TheNav />
@@ -13,13 +13,8 @@
 <script setup>
 import TheHeader from "./components/TheHeader.vue";
 import TheNav from "./components/TheNav.vue";
-import { PAGE_ACTIVITIES, PAGE_PROGRESS, PAGE_TIMELINE } from "./constants";
 
-import { currentPage } from "./router.js";
-
-import TheActivities from "./pages/TheActivities.vue";
-import TheProgress from "./pages/TheProgress.vue";
-import TheTimeline from "./pages/TheTimeline.vue";
+import { routes, currentPage } from "./router.js";
 </script>
 
 <style scoped></style>
