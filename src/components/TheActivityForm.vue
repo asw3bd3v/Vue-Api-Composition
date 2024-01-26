@@ -10,7 +10,7 @@
 			placeholder="Activity name"
 		/>
 		<BaseButton :disabled="name.trim() === ''">
-			<PlusIcon class="h-8" />
+			<BaseIcon name="Plus" class="h-8" />
 		</BaseButton>
 	</form>
 </template>
@@ -18,7 +18,7 @@
 <script setup>
 import { nextTick, ref } from "vue";
 import BaseButton from "./BaseButton.vue";
-import { PlusIcon } from "@heroicons/vue/24/outline";
+import BaseIcon from "./BaseIcon.vue";
 import { id } from "../functions";
 import { createActivity } from "../activities";
 

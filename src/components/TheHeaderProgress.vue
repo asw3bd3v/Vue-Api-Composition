@@ -6,7 +6,7 @@
 	>
 		<div v-if="true" class="flex items-center gap-1">
 			Day complete!
-			<CheckCircleIcon class="h-7 text-green-500" />
+			<BaseIcon name="CheckCircle" class="h-7 text-green-500" />
 		</div>
 		<div v-else class="flex items-center gap-1">
 			<div>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup>
-import { CheckCircleIcon } from "@heroicons/vue/24/solid";
+import BaseIcon from "./BaseIcon.vue";
 import { PAGE_PROGRESS } from "../constants";
 import { navigate } from "../router.js";
 </script>
