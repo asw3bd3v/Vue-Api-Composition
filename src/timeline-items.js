@@ -42,7 +42,7 @@ export function scrollToHour(hour, isSmooth = true) {
     el.scrollIntoView({ behavior: isSmooth ? "smooth" : "instant" });
 }
 
-export function scrollToCurrentHour(isSmooth = true) {
+export function scrollToCurrentHour(isSmooth = false) {
     scrollToHour(currentHour(), isSmooth);
 }
 

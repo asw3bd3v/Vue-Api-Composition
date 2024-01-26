@@ -13,10 +13,10 @@
 </template>
 
 <script setup>
-import { nextTick, watchPostEffect } from "vue";
+import { nextTick, onActivated, watchPostEffect } from "vue";
 import TimelineItem from "../components/TimelineItem.vue";
-import { PAGE_TIMELINE } from "../constants";
-import { currentPage } from "../router.js";
+//import { PAGE_TIMELINE } from "../constants";
+//import { currentPage } from "../router.js";
 import {
 	timelineItems,
 	timelineItemRefs,
@@ -24,11 +24,17 @@ import {
 	scrollToCurrentHour,
 } from "../timeline-items.js";
 
-watchPostEffect(async () => {
+/* watchPostEffect(async () => {
 	if (currentPage.value === PAGE_TIMELINE) {
 		await nextTick();
 
 		scrollToCurrentHour(false);
 	}
-});
+}); */
+
+/* onActivated(async () => {
+	scrollToCurrentHour(false);
+}); */
+
+onActivated(scrollToCurrentHour);
 </script>
