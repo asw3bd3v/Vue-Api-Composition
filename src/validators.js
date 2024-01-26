@@ -25,6 +25,10 @@ export function validateActivities(activities) {
   return activities.every(isActivityValid);
 }
 
+export function isNotEmptyString(value) {
+  return isString(value) && value.length > 0
+}
+
 export function isActivityValid({ id, name, secondsToComplete }) {
   if (isNull(id)) {
     return true;
@@ -35,10 +39,6 @@ export function isActivityValid({ id, name, secondsToComplete }) {
     isNotEmptyString(name),
     isNumber(secondsToComplete),
   ].every(Boolean);
-}
-
-function isNotEmptyString(value) {
-  return isString(value) && value.length > 0
 }
 
 export function isHourValid(hour) {

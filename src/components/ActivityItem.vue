@@ -5,7 +5,7 @@
 				:type="BUTTON_TYPE_DANGER"
 				@click="deleteAndResetActivity(activity)"
 			>
-				<BaseIcon :name="ICON_TRASH" class="h-8" />
+				<BaseIcon :name="ICON_TRASH" />
 			</BaseButton>
 			<span class="truncate text-xl">{{ activity.name }}</span>
 		</div>
