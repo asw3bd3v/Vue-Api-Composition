@@ -3,7 +3,7 @@
 		<div class="truncate text-xl">{{ activity.name }}</div>
 		<div class="flex h-5 overflow-hidden rounded bg-neutral-200">
 			<div
-				:class="`bg-${color}-500`"
+				:class="getProgressColorClass(progress)"
 				:style="`width: ${progress}%`"
 			></div>
 		</div>
@@ -17,9 +17,9 @@
 <script setup>
 import { computed } from "vue";
 import { getActivityProgress } from "../activities";
+import { getProgressColorClass } from "../functions";
 
 const props = defineProps(["index", "activity"]);
-const color = ["red", "yellow", "blue", "green"][props.index];
 const timeProgress = [
 	"03:00 / 30:00",
 	"15:00 / 30:00",
