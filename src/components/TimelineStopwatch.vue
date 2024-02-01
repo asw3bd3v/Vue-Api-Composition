@@ -59,7 +59,7 @@ watch(
 	() => props.timelineItem.activityId,
 	() => {
 		updateTimelineItem(props.timelineItem, {
-			activitySeconds: seconds.value,
+			activitySeconds: seconds.value * temp,
 		});
 	},
 );
