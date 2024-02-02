@@ -1,5 +1,4 @@
 import { ref } from "vue";
-import { activities } from "./activities";
 import {
     HOURS_IN_DAY,
     MIDNIGHT_HOUR,
@@ -8,15 +7,14 @@ import { currentHour } from "./functions";
 
 export const timelineItemRefs = ref([]);
 
-export const timelineItems = ref(generateTimelineItems(activities.value));
+export const timelineItems = ref(generateTimelineItems());
 
 export function updateTimelineItem(timelineItem, fields) {
     return Object.assign(timelineItem, fields);
 }
 
 export function resetTimelineItemActivities(activity) {
-    timelineItems.value
-        .filter((timelineItem) => hasActivity(timelineItem, activity))
+    return filterTimelineItemsByActivity(activity)
         .forEach((timelineItem) => {
             updateTimelineItem(timelineItem, {
                 activityId: null,
@@ -25,12 +23,11 @@ export function resetTimelineItemActivities(activity) {
         });
 }
 
-export function getTotalActivitySeconds(activity) {
-    return timelineItems.value
-        .filter((timelineItem) => hasActivity(timelineItem, activity))
-        .reduce((totalSeconds, timelineItem) =>
-            Math.round(timelineItem.activitySeconds + totalSeconds)
-            , 0)
+export function calculateTrackedActivitySeconds(activity) {
+    return filterTimelineItemsByActivity(activity)
+        .map(({ activitySeconds }) => activitySeconds)
+        .reduce((total, seconds) =>
+            Math.round(total + seconds), 0);
 }
 
 export function scrollToHour(hour, isSmooth = true) {
@@ -46,8 +43,9 @@ export function scrollToCurrentHour(isSmooth = false) {
     scrollToHour(currentHour(), isSmooth);
 }
 
-function hasActivity(timelineItem, activity) {
-    return timelineItem.activityId === activity.id;
+function filterTimelineItemsByActivity({id}) {
+    return timelineItems.value
+        .filter(({activityId}) => activityId === id)
 }
 
 function generateTimelineItems() {

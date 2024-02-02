@@ -7,7 +7,7 @@
 <script setup>
 import { computed } from "vue";
 import { formatSeconds } from "../functions";
-import { getTotalActivitySeconds } from "../timeline-items";
+import { calculateTrackedActivitySeconds } from "../timeline-items";
 import { isActivityValid } from "../validators";
 
 const props = defineProps({
@@ -37,7 +37,7 @@ const sign = computed(() => (secondsDiff.value >= 0 ? "+" : "-"));
 
 const secondsDiff = computed(
 	() =>
-		getTotalActivitySeconds(props.activity) -
+		calculateTrackedActivitySeconds(props.activity) -
 		props.activity.secondsToComplete,
 );
 </script>
