@@ -13,8 +13,8 @@ export function updateTimelineItem(timelineItem, fields) {
     return Object.assign(timelineItem, fields);
 }
 
-export function resetTimelineItemActivities(activity) {
-    return filterTimelineItemsByActivity(activity)
+export function resetTimelineItemActivities(timelineItems, activity) {
+    return filterTimelineItemsByActivity(timelineItems, activity)
         .forEach((timelineItem) => {
             updateTimelineItem(timelineItem, {
                 activityId: null,
@@ -23,8 +23,8 @@ export function resetTimelineItemActivities(activity) {
         });
 }
 
-export function calculateTrackedActivitySeconds(activity) {
-    return filterTimelineItemsByActivity(activity)
+export function calculateTrackedActivitySeconds(timelineItems, activity) {
+    return filterTimelineItemsByActivity(timelineItems, activity)
         .map(({ activitySeconds }) => activitySeconds)
         .reduce((total, seconds) =>
             Math.round(total + seconds), 0);
@@ -43,9 +43,9 @@ export function scrollToCurrentHour(isSmooth = false) {
     scrollToHour(currentHour(), isSmooth);
 }
 
-function filterTimelineItemsByActivity({id}) {
-    return timelineItems.value
-        .filter(({activityId}) => activityId === id)
+function filterTimelineItemsByActivity(timelineItems, { id }) {
+    return timelineItems
+        .filter(({ activityId }) => activityId === id)
 }
 
 function generateTimelineItems() {
