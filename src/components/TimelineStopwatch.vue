@@ -27,6 +27,7 @@
 </template>
 
 <script setup>
+import { watch } from "vue";
 import {
 	BUTTON_TYPE_DANGER,
 	BUTTON_TYPE_WARNING,
@@ -34,6 +35,7 @@ import {
 } from "../constants.js";
 import { formatSeconds, currentHour } from "../functions";
 import { isTimelineItemValid } from "../validators";
+import { updateTimelineItem } from "../timeline-items";
 import { useStopwatch } from "../composables/stopwatch";
 import BaseButton from "./BaseButton.vue";
 import BaseIcon from "./BaseIcon.vue";
@@ -48,6 +50,18 @@ const props = defineProps({
 });
 
 const { seconds, isRunning, start, stop, reset } = useStopwatch(
-	props.timelineItem,
+	props.timelineItem.activitySeconds,
+	updateTimelineItemActivitySeconds,
 );
+
+watch(
+	() => props.timelineItem.activityId,
+	updateTimelineItemActivitySeconds,
+);
+
+function updateTimelineItemActivitySeconds() {
+	updateTimelineItem(props.timelineItem, {
+		activitySeconds: seconds.value,
+	});
+}
 </script>
