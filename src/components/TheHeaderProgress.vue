@@ -13,7 +13,7 @@
 				Progress:
 				<span class="font-mone">20%</span>
 			</div>
-			<div class="h-3 w-3 rounded-full bg-red-500"></div>
+			<div class="h-3 w-3 rounded-full bg-red-500" />
 		</div>
 	</a>
 </template>
