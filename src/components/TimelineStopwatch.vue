@@ -2,7 +2,7 @@
 	<div class="flex w-full gap-2">
 		<BaseButton
 			:type="BUTTON_TYPE_DANGER"
-			:disabled="!seconds"
+			:disabled="!timelineItem.activitySeconds"
 			@click="reset"
 		>
 			<BaseIcon :name="ICON_ARROW_PATH" />
@@ -10,7 +10,7 @@
 		<div
 			class="flex flex-grow items-center rounded bg-gray-100 font-mono text-3xl"
 		>
-			{{ formatSeconds(seconds) }}
+			{{ formatSeconds(timelineItem.activitySeconds) }}
 		</div>
 		<BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
 			<BaseIcon :name="ICON_PAUSE" />
@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { watch } from "vue";
+import { watchEffect } from "vue";
 import {
 	BUTTON_TYPE_DANGER,
 	BUTTON_TYPE_WARNING,
@@ -51,17 +51,14 @@ const props = defineProps({
 
 const { seconds, isRunning, start, stop, reset } = useStopwatch(
 	props.timelineItem.activitySeconds,
-	updateTimelineItemActivitySeconds,
 );
 
-watch(
-	() => props.timelineItem.activityId,
-	updateTimelineItemActivitySeconds,
-);
-
-function updateTimelineItemActivitySeconds() {
+// watchEffect работает по след. принципу:
+// если какая-то реактивная переменная, которая используется в замыкании (например seconds)
+// меняет свое значение, то все это замыкание будет запущено снова.
+watchEffect(() =>
 	updateTimelineItem(props.timelineItem, {
 		activitySeconds: seconds.value,
-	});
-}
+	}),
+);
 </script>
