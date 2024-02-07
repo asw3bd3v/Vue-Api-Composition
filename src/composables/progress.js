@@ -15,17 +15,17 @@ export function useProgress(activity) {
         calculateActivityCompletionPercentage(
             // вычисление общего процента выполнения
             activity, // время отведенное на активность
-            trackedSeconds.value, // все время, которое было потрачено на активность
+            trackedActivitySeconds.value, // все время, которое было потрачено на активность
         ),
     );
 
-    const trackedSeconds = computed(() =>
+    const trackedActivitySeconds = computed(() =>
         calculateTrackedActivitySeconds(timelineItems.value, activity),
     );
 
     return {
         colorClass,
         percentage,
-        trackedSeconds,
+        trackedActivitySeconds,
     };
 }
