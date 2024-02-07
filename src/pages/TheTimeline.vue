@@ -1,5 +1,6 @@
 <template>
-	<div class="mt-7">
+	<div class="relative mt-7">
+		<TheTimelineIndicator />
 		<ul>
 			<TimelineItem
 				v-for="timelineItem in timelineItems"
@@ -14,6 +15,7 @@
 <script setup>
 import { nextTick, onActivated, watchPostEffect } from "vue";
 import TimelineItem from "../components/TimelineItem.vue";
+import TheTimelineIndicator from "../components/TheTimelineIndicator.vue";
 //import { PAGE_TIMELINE } from "../constants";
 //import { currentPage } from "../router.js";
 import {
