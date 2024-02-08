@@ -7,59 +7,19 @@
 </template>
 
 <script setup>
-import { computed, ref, watchEffect, onActivated, onDeactivated } from "vue";
-import {
-	HUNDRED_PERCENT,
-	MILLISECONDS_IN_SECOND,
-	MINUTES_IN_HOUR,
-	SECONDS_IN_DAY,
-	SECONDS_IN_MINUTE,
-} from "../constants";
+import { computed, ref } from "vue";
+import { HUNDRED_PERCENT } from "../constants";
+import { useSecondsInMidnight } from "../composables/seconds-since-midnight.js";
 
-const secondsSinceMidnight = ref(calculateSecondsSinceMidnight());
 const indicatorRef = ref();
 
-let timer = null;
-
-onActivated(() => {
-	secondsSinceMidnight.value = calculateSecondsSinceMidnight();
-
-	timer = setInterval(
-		() => secondsSinceMidnight.value++,
-		MILLISECONDS_IN_SECOND,
-	);
-});
-
-onDeactivated(() => {
-	clearInterval(timer);
-});
+const { secondsSinceMidnightInPercentage } = useSecondsInMidnight();
 
 const topOffset = computed(
 	() =>
 		(secondsSinceMidnightInPercentage.value * getTimelineHeight()) /
 		HUNDRED_PERCENT,
 );
-
-const secondsSinceMidnightInPercentage = computed(
-	() => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
-);
-
-watchEffect(() => {
-	if (secondsSinceMidnight.value > SECONDS_IN_DAY) {
-		secondsSinceMidnight.value = 0;
-	}
-});
-
-// количество секунд прошедших с полночи
-function calculateSecondsSinceMidnight() {
-	const now = new Date();
-
-	return (
-		SECONDS_IN_MINUTE * MINUTES_IN_HOUR * now.getHours() +
-		SECONDS_IN_MINUTE * now.getMinutes() +
-		now.getSeconds()
-	);
-}
 
 function getTimelineHeight() {
 	return indicatorRef.value?.parentNode.getBoundingClientRect().height;
