@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watchEffect } from "vue";
+import { computed, ref, watchEffect, onActivated, onDeactivated } from "vue";
 import {
 	HUNDRED_PERCENT,
 	MILLISECONDS_IN_SECOND,
@@ -19,7 +19,20 @@ import {
 const secondsSinceMidnight = ref(calculateSecondsSinceMidnight());
 const indicatorRef = ref();
 
-setInterval(() => secondsSinceMidnight.value++, MILLISECONDS_IN_SECOND);
+let timer = null;
+
+onActivated(() => {
+	secondsSinceMidnight.value = calculateSecondsSinceMidnight();
+
+	timer = setInterval(
+		() => secondsSinceMidnight.value++,
+		MILLISECONDS_IN_SECOND,
+	);
+});
+
+onDeactivated(() => {
+	clearInterval(timer);
+});
 
 const topOffset = computed(
 	() =>
