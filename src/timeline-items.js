@@ -3,7 +3,7 @@ import {
     HOURS_IN_DAY,
     MIDNIGHT_HOUR,
 } from "./constants";
-import { currentHour } from "./functions";
+import { now } from "./time";
 
 export const timelineItemRefs = ref([]);
 
@@ -18,7 +18,7 @@ export function resetTimelineItemActivities(timelineItems, activity) {
         .forEach((timelineItem) => {
             updateTimelineItem(timelineItem, {
                 activityId: null,
-                activitySeconds: timelineItem.hour === currentHour()
+                activitySeconds: timelineItem.hour === now.value.getHours()
                     ? timelineItem.activitySeconds
                     : 0,
             })
@@ -42,7 +42,7 @@ export function scrollToHour(hour, isSmooth = true) {
 }
 
 export function scrollToCurrentHour(isSmooth = false) {
-    scrollToHour(currentHour(), isSmooth);
+    scrollToHour(now.value.getHours(), isSmooth);
 }
 
 function filterTimelineItemsByActivity(timelineItems, { id }) {

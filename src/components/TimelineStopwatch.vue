@@ -18,7 +18,7 @@
 		<BaseButton
 			v-else
 			:type="BUTTON_TYPE_SUCCESS"
-			:disabled="timelineItem.hour !== currentHour()"
+			:disabled="timelineItem.hour !== now.getHours()"
 			@click="start"
 		>
 			<BaseIcon :name="ICON_PLAY" />
@@ -33,13 +33,14 @@ import {
 	BUTTON_TYPE_WARNING,
 	BUTTON_TYPE_SUCCESS,
 } from "../constants.js";
-import { formatSeconds, currentHour } from "../functions";
+import { formatSeconds } from "../functions";
 import { isTimelineItemValid } from "../validators";
 import { updateTimelineItem } from "../timeline-items";
 import { useStopwatch } from "../composables/stopwatch";
 import BaseButton from "./BaseButton.vue";
 import BaseIcon from "./BaseIcon.vue";
 import { ICON_PLAY, ICON_PAUSE, ICON_ARROW_PATH } from "../icons";
+import { now } from "../time";
 
 const props = defineProps({
 	timelineItem: {
@@ -52,6 +53,12 @@ const props = defineProps({
 const { seconds, isRunning, start, stop, reset } = useStopwatch(
 	props.timelineItem.activitySeconds,
 );
+
+watchEffect(() => {
+	if (props.timelineItem.hour !== now.value.getHours() && isRunning.value) {
+		stop();
+	}
+});
 
 // watchEffect работает по след. принципу:
 // если какая-то реактивная переменная, которая используется в замыкании (например seconds)
