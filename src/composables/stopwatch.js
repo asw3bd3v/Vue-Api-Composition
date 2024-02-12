@@ -6,7 +6,7 @@ import {
 export function useStopwatch(initialSeconds) {
     const seconds = ref(initialSeconds);
     const isRunning = ref(false);
-    const temp = 120;
+    const temp = 1;
 
     function start() {
         isRunning.value = setInterval(() => {
