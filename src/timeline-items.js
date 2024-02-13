@@ -2,6 +2,7 @@ import { ref } from "vue";
 import {
     HOURS_IN_DAY,
     MIDNIGHT_HOUR,
+    MILLISECONDS_IN_SECOND,
 } from "./constants";
 import { now } from "./time";
 
@@ -43,6 +44,24 @@ export function scrollToHour(hour, isSmooth = true) {
 
 export function scrollToCurrentHour(isSmooth = false) {
     scrollToHour(now.value.getHours(), isSmooth);
+}
+
+let timelineItemTimer = null;
+
+export function startTimelineItemTimer(activeTimelineItem) {
+    timelineItemTimer = setInterval(() => {
+        updateTimelineItem(activeTimelineItem, {
+            activitySeconds: activeTimelineItem.activitySeconds + 1,
+        });
+    }, MILLISECONDS_IN_SECOND);
+}
+
+export function stopTimelineItemTimer() {
+    clearInterval(timelineItemTimer);
+}
+
+export function findActiveTimelineItem() {
+    return timelineItems.value.find(({ isActive }) => isActive);
 }
 
 function filterTimelineItemsByActivity(timelineItems, { id }) {
