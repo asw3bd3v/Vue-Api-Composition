@@ -25,8 +25,8 @@ import {
 	stopTimelineItemTimer,
 } from "../timeline-items.js";
 import {
-	startTimer,
-	stopTimer,
+	startCurrentDateTimer,
+	stopCurrentDateTimer,
 } from "../time.js";
 
 /* watchPostEffect(async () => {
@@ -45,8 +45,8 @@ stopTimelineItemTimer();
 
 onActivated(() => {
 	scrollToCurrentHour();
-	startTimer();
+	startCurrentDateTimer();
 });
 
-onDeactivated(stopTimer);
+onDeactivated(stopCurrentDateTimer);
 </script>
