@@ -1,4 +1,4 @@
-import { APP_NAME } from './constants.js';
+import { APP_NAME, MILLISECONDS_IN_SECOND } from './constants.js';
 import { isToday, today } from './time.js';
 import { activities } from './activities.js';
 import { timelineItems } from './timeline-items.js';
@@ -8,8 +8,14 @@ export function loadState() {
 
     const state = serializedState ? JSON.parse(serializedState) : {};
 
-    timelineItems.value = isToday(new Date(state.date)) ? state.timelineItems : timelineItems.value;
     activities.value = state.activities || activities.value;
+
+    // дата последней активности приложения
+    const lastActiveAt = new Date(state.lastActiveAt);
+
+    timelineItems.value = isToday(lastActiveAt)
+        ? syncIdleSeconds(state.timelineItems, lastActiveAt)
+        : timelineItems.value;
 }
 
 
@@ -19,7 +25,17 @@ export function saveState() {
         JSON.stringify({
             timelineItems: timelineItems.value,
             activities: activities.value,
-            date: today(),
+            lastActiveAt: today(),
         })
     );
+}
+
+function syncIdleSeconds(timelineItems, lastActiveAt) {
+    const activeTimelienItem = timelineItems.find(({ isActive }) => isActive);
+
+    if (activeTimelienItem) {
+        activeTimelienItem.activitySeconds += (today() - lastActiveAt) / MILLISECONDS_IN_SECOND;
+    }
+
+    return timelineItems;
 }
