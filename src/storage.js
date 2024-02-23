@@ -2,6 +2,22 @@ import { APP_NAME } from './constants.js';
 import { isToday, today, endOfHour, toSeconds } from './time.js';
 import { activities } from './activities.js';
 import { timelineItems } from './timeline-items.js';
+import { activeTimelineItem } from './timeline-items.js';
+import {
+    startTimelineItemTimer,
+    stopTimelineItemTimer,
+
+} from "./timeline-item-timer.js";
+
+export function syncState(shouldLoad = true) {
+    shouldLoad ? loadState() : saveState();
+
+    if (activeTimelineItem.value) {
+        shouldLoad
+            ? startTimelineItemTimer(activeTimelineItem.value)
+            : stopTimelineItemTimer(activeTimelineItem.value);
+    }
+}
 
 export function loadState() {
     const serializedState = localStorage.getItem(APP_NAME);
