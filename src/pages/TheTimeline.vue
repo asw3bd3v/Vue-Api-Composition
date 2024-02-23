@@ -22,7 +22,6 @@ import {
 	timelineItems,
 	timelineItemRefs,
 	scrollToCurrentHour,
-	stopTimelineItemTimer,
 } from "../timeline-items.js";
 import {
 	startCurrentDateTimer,
@@ -40,8 +39,6 @@ import {
 /* onActivated(async () => {
 	scrollToCurrentHour(false);
 }); */
-
-stopTimelineItemTimer();
 
 onActivated(() => {
 	scrollToCurrentHour();

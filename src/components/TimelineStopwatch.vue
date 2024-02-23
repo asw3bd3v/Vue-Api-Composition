@@ -3,7 +3,7 @@
 		<BaseButton
 			:type="BUTTON_TYPE_DANGER"
 			:disabled="!timelineItem.activitySeconds"
-			@click="reset"
+			@click="resetTimelineItemTimer(timelineItem)"
 		>
 			<BaseIcon :name="ICON_ARROW_PATH" />
 		</BaseButton>
@@ -12,14 +12,18 @@
 		>
 			{{ formatSeconds(timelineItem.activitySeconds) }}
 		</div>
-		<BaseButton v-if="isRunning" :type="BUTTON_TYPE_WARNING" @click="stop">
+		<BaseButton
+			v-if="timelineItemTimer && timelineItem.hour === now.getHours()"
+			:type="BUTTON_TYPE_WARNING"
+			@click="stopTimelineItemTimer(timelineItem)"
+		>
 			<BaseIcon :name="ICON_PAUSE" />
 		</BaseButton>
 		<BaseButton
 			v-else
 			:type="BUTTON_TYPE_SUCCESS"
 			:disabled="timelineItem.hour !== now.getHours()"
-			@click="start"
+			@click="startTimelineItemTimer(timelineItem)"
 		>
 			<BaseIcon :name="ICON_PLAY" />
 		</BaseButton>
@@ -27,7 +31,6 @@
 </template>
 
 <script setup>
-import { watch, watchEffect, onMounted } from "vue";
 import {
 	BUTTON_TYPE_DANGER,
 	BUTTON_TYPE_WARNING,
@@ -35,49 +38,22 @@ import {
 } from "../constants.js";
 import { formatSeconds } from "../functions";
 import { isTimelineItemValid } from "../validators";
-import { updateTimelineItem } from "../timeline-items";
-import { useStopwatch } from "../composables/stopwatch";
+import {
+	timelineItemTimer,
+	startTimelineItemTimer,
+	stopTimelineItemTimer,
+	resetTimelineItemTimer,
+} from "../timeline-items";
 import BaseButton from "./BaseButton.vue";
 import BaseIcon from "./BaseIcon.vue";
 import { ICON_PLAY, ICON_PAUSE, ICON_ARROW_PATH } from "../icons";
 import { now } from "../time";
 
-const props = defineProps({
+defineProps({
 	timelineItem: {
 		type: Object,
 		required: true,
 		validator: isTimelineItemValid,
 	},
 });
-
-const { seconds, isRunning, start, stop, reset } = useStopwatch(
-	props.timelineItem.activitySeconds,
-);
-
-onMounted(() => {
-	if (props.timelineItem.isActive) {
-		start();
-	}
-});
-
-watchEffect(() => {
-	if (props.timelineItem.hour !== now.value.getHours() && isRunning.value) {
-		stop();
-	}
-});
-
-// watchEffect работает по след. принципу:
-// если какая-то реактивная переменная, которая используется в замыкании (например seconds)
-// меняет свое значение, то все это замыкание будет запущено снова.
-watchEffect(() =>
-	updateTimelineItem(props.timelineItem, {
-		activitySeconds: seconds.value,
-	}),
-);
-
-watch(isRunning, () =>
-	updateTimelineItem(props.timelineItem, {
-		isActive: Boolean(isRunning.value),
-	}),
-);
 </script>
