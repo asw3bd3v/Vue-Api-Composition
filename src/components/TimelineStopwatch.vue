@@ -43,7 +43,7 @@ import {
 	startTimelineItemTimer,
 	stopTimelineItemTimer,
 	resetTimelineItemTimer,
-} from "../timeline-items";
+} from "../timeline-item-timer.js";
 import BaseButton from "./BaseButton.vue";
 import BaseIcon from "./BaseIcon.vue";
 import { ICON_PLAY, ICON_PAUSE, ICON_ARROW_PATH } from "../icons";
