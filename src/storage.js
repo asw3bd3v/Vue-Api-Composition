@@ -2,7 +2,7 @@ import { APP_NAME } from './constants.js';
 import { isToday, today, endOfHour, toSeconds } from './time.js';
 import { activities } from './activities.js';
 import { timelineItems } from './timeline-items.js';
-import { activeTimelineItem } from './timeline-items.js';
+import { activeTimelineItem, resetTimelineItems } from './timeline-items.js';
 import {
     startTimelineItemTimer,
     stopTimelineItemTimer,
@@ -29,9 +29,13 @@ export function loadState() {
     // дата последней активности приложения
     const lastActiveAt = new Date(state.lastActiveAt);
 
-    timelineItems.value = isToday(lastActiveAt)
-        ? syncIdleSeconds(state.timelineItems, lastActiveAt)
-        : timelineItems.value;
+    timelineItems.value = state.timelineItems ?? timelineItems.value;
+
+    if (activeTimelineItem.value && isToday(lastActiveAt)) {
+        timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt);
+    } else if (state.timelineItems && !isToday(lastActiveAt)) {
+        timelineItems.value = resetTimelineItems(state.timelineItems);
+    }
 }
 
 

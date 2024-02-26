@@ -34,6 +34,14 @@ export function calculateTrackedActivitySeconds(timelineItems, activity) {
             Math.round(total + seconds), 0);
 }
 
+export function resetTimelineItems(timelineItems) {
+    return timelineItems.map((timelineItem) => ({
+        ...timelineItem,
+        activitySeconds: 0,
+        isActive: false,
+    }));
+}
+
 export function scrollToHour(hour, isSmooth = true) {
     const el =
         hour === MIDNIGHT_HOUR
