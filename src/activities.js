@@ -13,6 +13,10 @@ export const activitySelectOptions = computed(() =>
     generateActivitySelectOptions(activities.value),
 );
 
+export function initializeActivities(state) {
+    activities.value = state.activities || [];
+}
+
 export function createActivity(activity) {
     activities.value.push(activity);
 }

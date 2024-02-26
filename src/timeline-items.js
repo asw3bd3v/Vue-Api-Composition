@@ -3,13 +3,26 @@ import {
     HOURS_IN_DAY,
     MIDNIGHT_HOUR,
 } from "./constants";
-import { now } from "./time";
+import { isToday, now, today, endOfHour, toSeconds } from './time.js';
 
 export const timelineItemRefs = ref([]);
 
-export const timelineItems = ref(generateTimelineItems());
+export const timelineItems = ref([]);
 
 export const activeTimelineItem = computed(() => timelineItems.value.find(({ isActive }) => isActive));
+
+export function initializeTimelineItems(state) {
+    // дата последней активности приложения
+    const lastActiveAt = new Date(state.lastActiveAt);
+
+    timelineItems.value = state.timelineItems ?? generateTimelineItems();
+
+    if (activeTimelineItem.value && isToday(lastActiveAt)) {
+        timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt);
+    } else if (state.timelineItems && !isToday(lastActiveAt)) {
+        timelineItems.value = resetTimelineItems(state.timelineItems);
+    }
+}
 
 export function updateTimelineItem(timelineItem, fields) {
     return Object.assign(timelineItem, fields);
@@ -53,6 +66,23 @@ export function scrollToHour(hour, isSmooth = true) {
 
 export function scrollToCurrentHour(isSmooth = false) {
     scrollToHour(now.value.getHours(), isSmooth);
+}
+
+function syncIdleSeconds(timelineItems, lastActiveAt) {
+    const activeTimelienItem = timelineItems.find(({ isActive }) => isActive);
+
+    if (activeTimelienItem) {
+        activeTimelienItem.activitySeconds += calculateIdleSeconds(lastActiveAt);
+    }
+
+    return timelineItems;
+}
+
+function calculateIdleSeconds(lastActiveAt) {
+
+    return lastActiveAt.getHours() === today().getHours()
+        ? toSeconds(today() - lastActiveAt)
+        : toSeconds(endOfHour(lastActiveAt) - lastActiveAt);
 }
 
 function filterTimelineItemsByActivity(timelineItems, { id }) {
