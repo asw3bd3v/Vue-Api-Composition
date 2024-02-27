@@ -19,7 +19,6 @@ export function syncState(shouldLoad = true) {
 }
 
 function loadState() {
-
     const state = loadFromLocalStorage();
 
     initializeActivities(state);

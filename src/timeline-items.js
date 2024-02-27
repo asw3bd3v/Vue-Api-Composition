@@ -18,9 +18,9 @@ export function initializeTimelineItems(state) {
     timelineItems.value = state.timelineItems ?? generateTimelineItems();
 
     if (activeTimelineItem.value && isToday(lastActiveAt)) {
-        timelineItems.value = syncIdleSeconds(state.timelineItems, lastActiveAt);
+        syncIdleSeconds(lastActiveAt);
     } else if (state.timelineItems && !isToday(lastActiveAt)) {
-        timelineItems.value = resetTimelineItems(state.timelineItems);
+        resetTimelineItems();
     }
 }
 
@@ -47,14 +47,6 @@ export function calculateTrackedActivitySeconds(timelineItems, activity) {
             Math.round(total + seconds), 0);
 }
 
-export function resetTimelineItems(timelineItems) {
-    return timelineItems.map((timelineItem) => ({
-        ...timelineItem,
-        activitySeconds: 0,
-        isActive: false,
-    }));
-}
-
 export function scrollToHour(hour, isSmooth = true) {
     const el =
         hour === MIDNIGHT_HOUR
@@ -68,14 +60,19 @@ export function scrollToCurrentHour(isSmooth = false) {
     scrollToHour(now.value.getHours(), isSmooth);
 }
 
-function syncIdleSeconds(timelineItems, lastActiveAt) {
-    const activeTimelienItem = timelineItems.find(({ isActive }) => isActive);
+function resetTimelineItems() {
+    timelineItems.value.forEach((timelineItem) => {
+        updateTimelineItem(timelineItem, {
+            activitySeconds: 0,
+            isActive: false,
+        });
+    });
+}
 
-    if (activeTimelienItem) {
-        activeTimelienItem.activitySeconds += calculateIdleSeconds(lastActiveAt);
-    }
-
-    return timelineItems;
+function syncIdleSeconds(lastActiveAt) {
+    updateTimelineItem(activeTimelineItem.value, {
+        activitySeconds: activeTimelineItem.value.activitySeconds + calculateIdleSeconds(lastActiveAt)
+    });
 }
 
 function calculateIdleSeconds(lastActiveAt) {
