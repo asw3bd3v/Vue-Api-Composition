@@ -5,9 +5,17 @@ import {
 import { updateTimelineItem, activeTimelineItem } from "./timeline-items";
 import { now } from "./time";
 
-export const timelineItemTimer = ref(false);
+watchEffect(() => {
+    if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
+        stopTimelineItemTimer();
+    }
+});
+
+const timelineItemTimer = ref(false);
 
 export function startTimelineItemTimer(timelineItem) {
+    timelineItem = timelineItem ?? activeTimelineItem.value;
+
     updateTimelineItem(timelineItem, {
         isActive: true,
     });
@@ -19,8 +27,8 @@ export function startTimelineItemTimer(timelineItem) {
     }, MILLISECONDS_IN_SECOND);
 }
 
-export function stopTimelineItemTimer(timelineItem) {
-    updateTimelineItem(timelineItem, {
+export function stopTimelineItemTimer() {
+    updateTimelineItem(activeTimelineItem.value, {
         isActive: false,
     });
 
@@ -34,11 +42,8 @@ export function resetTimelineItemTimer(timelineItem) {
         activitySeconds: 0,
     });
 
-    stopTimelineItemTimer(timelineItem);
+    if (activeTimelineItem.value) {
+        stopTimelineItemTimer();
+    }
 }
 
-watchEffect(() => {
-    if (activeTimelineItem.value && activeTimelineItem.value.hour !== now.value.getHours()) {
-        stopTimelineItemTimer(activeTimelineItem.value);
-    }
-});
