@@ -23,10 +23,7 @@ import {
 	timelineItemRefs,
 	scrollToCurrentHour,
 } from "../timeline-items.js";
-import {
-	startCurrentDateTimer,
-	stopCurrentDateTimer,
-} from "../time.js";
+import { startCurrentDateTimer, stopCurrentDateTimer } from "../time.js";
 
 /* watchPostEffect(async () => {
 	if (currentPage.value === PAGE_TIMELINE) {

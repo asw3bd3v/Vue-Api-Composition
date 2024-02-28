@@ -1,69 +1,67 @@
-import { computed, ref, } from "vue";
+import { computed, ref } from "vue";
 import {
-    HUNDRED_PERCENT,
-    MILLISECONDS_IN_SECOND,
-    SECONDS_IN_DAY,
-    SECONDS_IN_HOUR,
+	HUNDRED_PERCENT,
+	MILLISECONDS_IN_SECOND,
+	SECONDS_IN_DAY,
+	SECONDS_IN_HOUR,
 } from "./constants";
 
 export function today() {
-    const today = new Date();
-
-    //today.setHours(0, 0);
-
-    return today;
+	return new Date();
 }
 
 export function tomorrow() {
-    const tomorrow = today();
+	const tomorrow = today();
 
-    tomorrow.setDate(tomorrow.getDate() + 1);
+	tomorrow.setDate(tomorrow.getDate() + 1);
 
-    return tomorrow;
+	return tomorrow;
 }
 
 export function endOfHour(date) {
-    const endOfHour = new Date(date);
+	const endOfHour = new Date(date);
 
-    endOfHour.setTime(endOfHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECOND);
+	endOfHour.setTime(
+		endOfHour.getTime() + SECONDS_IN_HOUR * MILLISECONDS_IN_SECOND,
+	);
 
-    endOfHour.setMinutes(0, 0, 0);
+	endOfHour.setMinutes(0, 0, 0);
 
-    return endOfHour;
+	return endOfHour;
 }
 
 export function isToday(date) {
-    return date.toDateString() === today().toDateString();
+	return date.toDateString() === today().toDateString();
 }
 
 export function toSeconds(milliseconds) {
-    return Math.round(milliseconds / MILLISECONDS_IN_SECOND);
+	return Math.round(milliseconds / MILLISECONDS_IN_SECOND);
 }
 
 export const now = ref(today());
 
 export const secondsSinceMidnightInPercentage = computed(
-    () => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
+	() => (HUNDRED_PERCENT * secondsSinceMidnight.value) / SECONDS_IN_DAY,
 );
 
 const midnight = computed(() => new Date(now.value).setHours(0, 0, 0, 0));
 
 // количество секунд прошедших с полночи
-const secondsSinceMidnight = computed(() => (now.value - midnight.value) / MILLISECONDS_IN_SECOND);
+const secondsSinceMidnight = computed(
+	() => (now.value - midnight.value) / MILLISECONDS_IN_SECOND,
+);
 
 let currentDateTimer = null;
 
 export function startCurrentDateTimer() {
-    now.value = today();
+	now.value = today();
 
-    currentDateTimer = setInterval(
-        () => {
-            now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)
-        },
-        MILLISECONDS_IN_SECOND,
-    );
+	currentDateTimer = setInterval(
+		() => (now.value = today()),
+		MILLISECONDS_IN_SECOND,
+	);
 }
 
 export function stopCurrentDateTimer() {
-    clearInterval(currentDateTimer);
+	clearInterval(currentDateTimer);
 }
