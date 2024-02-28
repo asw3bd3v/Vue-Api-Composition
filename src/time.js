@@ -20,14 +20,7 @@ const secondsSinceMidnight = computed(
 );
 
 export function today() {
-	//return new Date();
-	const today = new Date();
-
-	/* today.setHours(16);
-	today.setMinutes(59);
-	today.setSeconds(55); */
-
-	return today;
+	return new Date();
 }
 
 export function tomorrow() {
@@ -59,13 +52,8 @@ export function toSeconds(milliseconds) {
 }
 
 export function startCurrentDateTimer() {
-	/* currentDateTimer = setInterval(
-		() => (now.value = today()),
-		MILLISECONDS_IN_SECOND,
-	); */
-
 	setInterval(
-		() => (now.value = new Date(now.value.getTime() + MILLISECONDS_IN_SECOND)),
+		() => (now.value = today()),
 		MILLISECONDS_IN_SECOND,
 	);
 }

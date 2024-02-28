@@ -1,6 +1,7 @@
-import { computed, ref } from "vue";
+import { watch, computed, ref } from "vue";
 import { HOURS_IN_DAY, MIDNIGHT_HOUR } from "./constants";
-import { isToday, today, endOfHour, toSeconds } from "./time.js";
+import { now, isToday, today, endOfHour, toSeconds } from "./time.js";
+import { stopTimelineItemTimer } from "./timeline-item-timer.js";
 
 export const timelineItemRefs = ref([]);
 
@@ -9,6 +10,19 @@ export const timelineItems = ref([]);
 export const activeTimelineItem = computed(() =>
 	timelineItems.value.find(({ isActive }) => isActive),
 );
+
+watch(now, (after, before) => {
+	if (
+		activeTimelineItem.value &&
+		activeTimelineItem.value.hour !== after.getHours()
+	) {
+		stopTimelineItemTimer();
+	}
+
+	if (before.getHours() !== after.getHours() && after.getHours() === MIDNIGHT_HOUR) {
+		resetTimelineItems();
+	}
+});
 
 export function initializeTimelineItems(state) {
 	// дата последней активности приложения
