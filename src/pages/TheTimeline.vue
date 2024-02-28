@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { nextTick, onActivated, onDeactivated, watchPostEffect } from "vue";
+import { onActivated } from "vue";
 import TimelineItem from "../components/TimelineItem.vue";
 import TheTimelineIndicator from "../components/TheTimelineIndicator.vue";
 //import { PAGE_TIMELINE } from "../constants";
@@ -23,7 +23,6 @@ import {
 	timelineItemRefs,
 	scrollToCurrentHour,
 } from "../timeline-items.js";
-import { startCurrentDateTimer, stopCurrentDateTimer } from "../time.js";
 
 /* watchPostEffect(async () => {
 	if (currentPage.value === PAGE_TIMELINE) {
@@ -37,10 +36,5 @@ import { startCurrentDateTimer, stopCurrentDateTimer } from "../time.js";
 	scrollToCurrentHour(false);
 }); */
 
-onActivated(() => {
-	scrollToCurrentHour();
-	startCurrentDateTimer();
-});
-
-onDeactivated(stopCurrentDateTimer);
+onActivated(scrollToCurrentHour);
 </script>
